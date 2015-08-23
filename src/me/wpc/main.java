@@ -1,6 +1,12 @@
 package me.wpc;
 
+import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import me.wpc.commands.addWarpPortalCommand;
+import me.wpc.commands.addWarpPortalPriceCommand;
 import me.wpc.commands.delWarpPortalCommand;
 import me.wpc.commands.listWarpPortalCommand;
 import me.wpc.commands.warpPortalCommand;
@@ -9,18 +15,18 @@ import me.wpc.methods.WPCUtili;
 import me.wpc.methods.WPortalFile;
 import net.gravitydevelopment.updater.Updater;
 import net.gravitydevelopment.updater.Updater.UpdateType;
-
-import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
+import net.milkbowl.vault.economy.Economy;
 
 public class main extends JavaPlugin implements Listener {
 
+	public static Economy econ;
+	
 	@SuppressWarnings("unused")
 	public void onEnable(){
 	//Classes
 	new WPCUtili (this);	
 	new WPortalFile(this);	
+	setupEconomy();
 	
 	//Configuration files	
 	reloadConfig();		
@@ -31,6 +37,7 @@ public class main extends JavaPlugin implements Listener {
 	
 	//Commands
 	getCommand("set-warp-portal-command").setExecutor(new addWarpPortalCommand (this));
+	getCommand("set-warp-portal-price").setExecutor(new addWarpPortalPriceCommand (this));
 	getCommand("del-warp-portal-command").setExecutor(new delWarpPortalCommand (this));
 	getCommand("list-warp-portal-command").setExecutor(new listWarpPortalCommand (this));
 	getCommand("wpc").setExecutor(new warpPortalCommand (this));
@@ -62,6 +69,18 @@ public class main extends JavaPlugin implements Listener {
 	getLogger().info(pn + " not found.");
 	}
 	}
+	
+    private boolean setupEconomy() {
+    if (getServer().getPluginManager().getPlugin("Vault") == null) {
+    return false;
+    }
+    RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+    if (rsp == null) {
+    return false;
+    }
+    econ = rsp.getProvider();
+    return econ != null;
+    }
 
 
 }

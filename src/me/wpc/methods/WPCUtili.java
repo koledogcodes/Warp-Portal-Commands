@@ -19,9 +19,10 @@ public class WPCUtili {
 	
 	//WPC Config generation.
 	public static void generateWPCConfiguration(){
-	if (plugin.getConfig().getString("WPC") != null){return;}
+	if (plugin.getConfig().getString("WPC") != null || plugin.getConfig().getString("Developer-Join") != null){return;}
 	plugin.getConfig().set("WPC.Enabled", true);
 	plugin.getConfig().set("Auto-Update", true);
+	plugin.getConfig().set("Developer-Join", true);
 	plugin.saveConfig();	
 	}
 	

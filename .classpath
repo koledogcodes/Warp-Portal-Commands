@@ -2,7 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="F:/serve/spigot.jar"/>
-	<classpathentry kind="lib" path="F:/serve/plugins/WarpPortals.jar"/>
+	<classpathentry kind="lib" path="D:/serve/spigot_server.jar"/>
+	<classpathentry kind="lib" path="D:/JavaLib/WarpPortals-5.6.5-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/JavaLib/Vault-1.4.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -4,15 +4,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import me.wpc.main;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.mccraftaholics.warpportals.api.WarpPortalsEvent;
+
+import me.wpc.main;
+import me.wpc.methods.WPCUtili;
 
 public class WPCPortalEnterEvent implements Listener {
 
@@ -21,26 +23,47 @@ public class WPCPortalEnterEvent implements Listener {
 	plugin = i;
 	}
 	
-	@SuppressWarnings("rawtypes")
+	@EventHandler
+	public void onDeveloperJoin(PlayerJoinEvent e){
+	Player player = e.getPlayer();
+	if (player.getName().equalsIgnoreCase("_KoleNinja_")){
+	if (plugin.getConfig().getBoolean("Developer-Join")){
+	WPCUtili.smsg(player, "&aThis server has &cWarp-Portal-Commands &a" + plugin.getDescription().getVersion() + "v.");
+	}
+	}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "deprecation" })
 	@EventHandler
 	public void onWPCPortalEnterEvent(WarpPortalsEvent e){
 	Player player = e.getPlayer();
-	String portal = e.getPortal().name;
 	
-	if (plugin.getConfig().getString(portal + ".commands") == null){
+	if (plugin.getConfig().getString(e.getPortal().name + ".price") != null){
+	if (plugin.getConfig().getDouble(e.getPortal().name + ".price") >= main.econ.getBalance(player.getName())){
+	main.econ.bankWithdraw(player.getName(), plugin.getConfig().getDouble(e.getPortal().name + ".price"));	
+	WPCUtili.smsg(player, "&a$" + plugin.getConfig().getDouble(e.getPortal().name + ".price") + " has been taken from your balance.");
+	}
+	else {
+	e.setCancelled(true);
+	WPCUtili.smsg(player, "&cYou need &4$" + (plugin.getConfig().getDouble(e.getPortal().name + ".price") - main.econ.getBalance(player.getName())) + " &cto use this portal.");
+	return;
+	}
+	}
+	
+	if (plugin.getConfig().getString(e.getPortal().name + ".commands") == null){
 	return;
 	}
 	
-	if (plugin.getConfig().getBoolean(portal + ".teleport") == false){
+	if (plugin.getConfig().getBoolean(e.getPortal().name + ".teleport") == false){
 	e.setCancelled(true);
 	}
 	
 	HashMap<CommandSender, List<String>> commandList = new HashMap<CommandSender,List<String>>();
 	HashMap<CommandSender, Iterator> loopCommands = new HashMap<CommandSender,Iterator>();
 	
-	commandList.put(player, plugin.getConfig().getStringList(portal + ".commands"));
+	commandList.put(player, plugin.getConfig().getStringList(e.getPortal().name + ".commands"));
 	
-	if (plugin.getConfig().getBoolean(portal + ".console-only")){
+	if (plugin.getConfig().getBoolean(e.getPortal().name + ".console-only")){
 	
 	loopCommands.put(player, commandList.get(player).iterator());	
 	while (loopCommands.get(player).hasNext()){
