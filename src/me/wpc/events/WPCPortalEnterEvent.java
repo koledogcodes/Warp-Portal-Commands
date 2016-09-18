@@ -39,8 +39,8 @@ public class WPCPortalEnterEvent implements Listener {
 	Player player = e.getPlayer();
 	
 	if (plugin.getConfig().getString(e.getPortal().name + ".price") != null){
-	if (plugin.getConfig().getDouble(e.getPortal().name + ".price") >= main.econ.getBalance(player.getName())){
-	main.econ.bankWithdraw(player.getName(), plugin.getConfig().getDouble(e.getPortal().name + ".price"));	
+	if (plugin.getConfig().getDouble(e.getPortal().name + ".price") <= main.econ.getBalance(player.getName())){
+	main.econ.withdrawPlayer(player.getName(), plugin.getConfig().getDouble(e.getPortal().name + ".price"));	
 	WPCUtili.smsg(player, "&a$" + plugin.getConfig().getDouble(e.getPortal().name + ".price") + " has been taken from your balance.");
 	}
 	else {
