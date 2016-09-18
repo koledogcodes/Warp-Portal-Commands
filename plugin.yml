@@ -13,6 +13,6 @@ commands:
     aliases: [lwpc,view-warp-portal-command,vwpc]
   set-warp-portal-price:
     description: Sets the price for a warp portal.
-    aliases: [swpp,setwpp]
+    aliases: [awpp,swpp,setwpp]
   wpc:
     description: Basic command for WarpPortalCommands.
