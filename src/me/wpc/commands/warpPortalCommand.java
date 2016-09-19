@@ -25,6 +25,7 @@ public class warpPortalCommand implements CommandExecutor {
 	WPCUtili.smsg(sender, "&c/awpc <warp portal name> <true|false> <true|false> <command> &f- Adds commands to warp portals");
 	WPCUtili.smsg(sender, "&c/dwpc <warp portal name> <command line> [delall] &f- Deletes commands from warp portals");
 	WPCUtili.smsg(sender, "&c/lwpc <warp portal name> &f- Lists commands of the warp portal");
+	WPCUtili.smsg(sender, "&c/awpp <warp portal name> <price> &f- Adds price to warp portals");
 	return true;	
 	}
 	
