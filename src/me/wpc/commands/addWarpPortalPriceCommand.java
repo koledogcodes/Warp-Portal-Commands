@@ -41,10 +41,10 @@ public class addWarpPortalPriceCommand implements CommandExecutor {
 	if (args.length == 2){
 	if (WPortalFile.getConfig().getString("portals." + args[0]) == null){WPCUtili.smsg(sender, "&cSorry warp portal &4" + args[0] + " &cdoes not exist."); return false;}	
 	try {
-	plugin.getConfig().set(args[0] + ".price", Double.parseDouble(args[2]));
+	plugin.getConfig().set(args[0] + ".price", Double.parseDouble(args[1]));
 	plugin.saveConfig();
 	WPCUtili.smsg(sender, "&d-----------------------------------------");
-	WPCUtili.smsg(sender, "&bPrice &c$" + args[2] + " &bset to warp portal: &c" + args[0]);
+	WPCUtili.smsg(sender, "&bPrice &c$" + args[1] + " &bset to warp portal: &c" + args[0]);
 	WPCUtili.smsg(sender, "&d-----------------------------------------");
 	}
 	catch (NumberFormatException e){
